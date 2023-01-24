@@ -1,0 +1,35 @@
+https://www.youtube.com/watch?v=yyUHQIec83I
+
+https://go.dev/learn/#
+https://go.dev/doc/install
+
+Build a booking app
+
+Main file is mainn.go
+Run go mod init golang-tutorial
+Create a function name main as an entry point
+Run the program go run main.go
+
+Go data type
+https://www.tutorialspoint.com/go/go_data_types.htm
+
+In Go, slices is list (dynamic array)
+
+
+When there are multiple go files it needs to run all the related files e.g.
+go run main2.go helper.go
+
+Alternatively, it can be run in the folder
+go run .
+
+To export the fuctions and variables, the first char of the functions and variables must be capitalized.
+
+Variables 3 scopes
+- local -> in a function -> can be used within a function/scope
+- package -> in a package -> can be used everywhere in the same package. Example is in main2.go
+  var conferenceName string = "Go Conference"
+  var remainingTickets uint = conferenceTickets
+  var bookings []string
+
+- global -> start with a capitalized letter. -> can be accessed everywhere
+  var MyVar string = "My value"
