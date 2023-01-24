@@ -33,3 +33,16 @@ Variables 3 scopes
 
 - global -> start with a capitalized letter. -> can be accessed everywhere
   var MyVar string = "My value"
+
+
+- Concurrency
+
+WaitGroup
+var wg = sync.WaitGroup{}
+
+wg.Add(1)
+go functionName
+
+
+wg.Wait()
+wg.Done()

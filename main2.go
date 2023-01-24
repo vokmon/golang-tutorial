@@ -4,6 +4,8 @@ package main
 import (
 	"fmt"
 	"golang-tutorial/helper"
+	"sync"
+	"time"
 )
 
 // Package level variables, no need to pass these variables around.
@@ -26,6 +28,8 @@ type UserData struct {
 	email           string
 	numberOfTickets uint
 }
+
+var wg = sync.WaitGroup{}
 
 func main() {
 
@@ -66,6 +70,13 @@ func main() {
 		}
 
 		bookTicket(userTickets, firstName, lastName, email)
+
+		// keyword "go" make the function run in the separate thread
+		// wg.Add -> number of thread to wait
+		// wg.Add(2) when ther is another go sendTicket2 and to on
+		wg.Add(1)
+		go sendTicket(userTickets, firstName, lastName, email)
+
 		firstNames := getFirstNames()
 		// fmt.Printf("These are all our bookings %v\n\n\n", bookings)
 		fmt.Printf("The first names of the bookings are %v\n\n\n", firstNames)
@@ -76,6 +87,9 @@ func main() {
 			fmt.Println("Our conference is booked out. Comeback next year.")
 			break
 		}
+
+		// Wait for all threads
+		wg.Wait()
 	}
 
 	// Switch statement
@@ -165,4 +179,14 @@ func bookTicket(userTickets uint, firstName string, lastName string, email strin
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+}
+
+func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+	time.Sleep(10 * time.Second)
+	// format string
+	var ticket = fmt.Sprintln("%v tickets for %v %v.", userTickets, firstName, lastName)
+	fmt.Println("####################")
+	fmt.Println("Sending ticket: %v \nto email address %v\n", ticket, email)
+	fmt.Println("####################")
+	wg.Done()
 }
